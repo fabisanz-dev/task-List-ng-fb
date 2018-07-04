@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-info" (click)="onClickGoogleLogin()" *ngIf="!isLogin; else profileUser">
+            SingWithGoogle
+          </button>
+          <ng-template #profileUser>
+            <div>
+                {{ this.nombreUsuario }} | {{ emailUsuario }} | <img class="rounded-circle" src="{{ fotoUsuario }}" alt="profile-user"  heigth="50" width="50"> |
+                <button class="btn btn-link" (click)="logOut()"> Salir </button>
+            </div>
+          </ng-template>
+          <h2>Listado de tareas</h2>
+          <button class="btn btn-default" (click)="sincronyze()">Sync</button>
+          <ul class="list-group" >
+            <li class="list-group-item" *ngFor="let item of taskList" >
+              <div (click)="editTask(item)" style="cursor:pointer;">
+                  {{ item.id}} {{ item.title }}
+              </div>
+
+              <div class="text-right">
+                  <button class="btn btn-sm btn-link text-danger" (click)="deleteTask(item.id)">
+                      <i class="material-icons">
+                          delete_forever
+                          </i>
+                  </button>
+              </div>
+            </li>
+              
+          </ul>
+          <hr>
+          <button *ngIf="isLogin" class="btn btn-primary" (click)="newTask()">Agregar Nueva Nota</button>
+        </div>
+        <div class="col-md-6" *ngIf="ShownewTask && isLogin">
+          <h2>Nueva Nota</h2>
+          <input type="text"  class="form-control" [(ngModel)]="task.title" placeholder="nueva tarea">
+          <br>
+          <textarea  cols="30" rows="10"  class="form-control" [(ngModel)]="task.descripcion"></textarea>
+          <hr>
+            <button type="button" class="btn btn-default" (click)="CancelTask()">Cancelar</button>
+            &nbsp;
+            <button type="button" class="btn btn-primary" (click)="saveTask()">Guardar</button>
+        </div>
+      </div>
+</div>
+
+
+
